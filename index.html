@@ -62,7 +62,7 @@
     <!-- main section starts here -->
 
     <main
-      class="grid grid-cols-12 gap-5 mt-10 w-11/12 mx-auto min-h-screen py-4"
+      class="grid grid-cols-1 md:grid-cols-12 md:gap-5 mt-10 w-11/12 mx-auto min-h-screen py-4"
     >
       <section class="bg-[#FEBF00] col-span-2 rounded-xl p-3">
         <h1 class="text-xl font-bold text-center bg-white rounded-2xl">
@@ -72,29 +72,10 @@
 
         <!-- categories starts here  -->
 
-        <div class="grid grid-cols-1 gap-3" id="category-container">
-          <button class="btn btn-block shadow btn-category">
-            <img
-              src="https://www.themealdb.com/images/category/beef.png"
-              alt=""
-              class="w-10"
-            />SeaFood
-          </button>
-          <button class="btn btn-block shadow btn-category">
-            <img
-              src="https://www.themealdb.com/images/category/beef.png"
-              alt=""
-              class="w-10"
-            />SeaFood
-          </button>
-          <button class="btn btn-block shadow btn-category">
-            <img
-              src="https://www.themealdb.com/images/category/beef.png"
-              alt=""
-              class="w-10"
-            />SeaFood
-          </button>
-        </div>
+        <div
+          class="grid grid-cols-1 gap-3 sticky top-0"
+          id="category-container"
+        ></div>
       </section>
       <!-- category end here -->
 
@@ -104,35 +85,9 @@
         <h1 class="text-xl font-bold text-center rounded-2xl">Our Foods</h1>
         <div class="divider"></div>
 
-        <div class="" id="food-container">
+        <div class="grid grid-cols-1 gap-5" id="food-container">
           <!-- food card starts here -->
-          <div class="p-5 bg-white flex gap-3 shadow rounded-xl">
-            <div class="img flex-1">
-              <img
-                src="https://www.themealdb.com/images/media/meals/1520081754.jpg"
-                alt=""
-                class="w-[160px] rounded-xl h-[160px] object-cover"
-              />
-            </div>
-            <div class="flex-2">
-              <h1 class="text-xl font-bold">
-                Roast fennel and aubergine paella
-              </h1>
 
-              <div class="badge badge-warning">Vegan</div>
-
-              <div class="divider divider-end">
-                <h2 class="text-yellow-600 font-semibold">
-                  $ <span class="price">560</span> BDT
-                </h2>
-              </div>
-
-              <button class="btn btn-warning">
-                <i class="fa-solid fa-square-plus"></i>
-                Add This Item
-              </button>
-            </div>
-          </div>
           <!-- food card end here -->
         </div>
       </section>
@@ -183,5 +138,7 @@
       <!-- cart section end here -->
     </main>
     <!-- main section end here -->
+
+    <script src="script/index.js"></script>
   </body>
 </html>
