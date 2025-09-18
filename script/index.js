@@ -1,4 +1,8 @@
 // console.log("js from another file");
+
+let cart = [];
+let total = 0;
+
 const loadCategory = () => {
   const url = `https://taxi-kitchen-api.vercel.app/api/v1/categories`;
   fetch(url)
@@ -53,13 +57,14 @@ const displayFood = (foods) => {
             <div class="img flex-1">
               <img
                 src="${element.foodImg}"
+                
                 onclick="handleModal(${element.id})"
                 alt=""
-                class="w-[160px] rounded-xl h-[160px] object-cover"
+                class="w-[160px] rounded-xl h-[160px] object-cover card-img"
               />
             </div>
             <div class="flex-2">
-              <h1 class="text-xl font-bold">
+              <h1 class="text-xl font-bold food-title">
                 ${element.title}
               </h1>
 
@@ -67,11 +72,11 @@ const displayFood = (foods) => {
 
               <div class="divider divider-end">
                 <h2 class="text-yellow-600 font-semibold">
-                  $ <span class="price">${element.price}</span> BDT
+                  $ <span class="food-price">${element.price}</span> BDT
                 </h2>
               </div>
 
-              <button class="btn btn-warning">
+              <button onclick="addToCard(this)" class="btn btn-warning">
                 <i class="fa-solid fa-square-plus"></i>
                 Add This Item
               </button>
@@ -160,3 +165,73 @@ const showModal = (modal) => {
 
 loadCategory();
 loadRandomFood();
+
+const addToCard = (btn) => {
+  const cardBtn = btn.parentNode.parentNode;
+  const cardTitle = cardBtn.querySelector(".food-title").innerText;
+  const cardPrice = cardBtn.querySelector(".food-price").innerText;
+  const cardPriceUpdated = Number(cardPrice);
+  const cardImg = cardBtn.querySelector(".card-img").src;
+
+  const updatedCard = {
+    cardTitle: cardTitle,
+    cardImg: cardImg,
+    cardPriceUpdated: cardPriceUpdated,
+  };
+  cart.push(updatedCard);
+  total = total + cardPriceUpdated;
+  displayCart(cart);
+  displayTotal(total);
+};
+
+const displayTotal = (value) => {
+  document.getElementById("cartTotal").innerText = value;
+};
+
+const displayCart = (carts) => {
+  const cartContainer = document.getElementById("cart-container");
+  cartContainer.innerHTML = "";
+  carts.forEach((element) => {
+    const cart = document.createElement("div");
+
+    cart.innerHTML = `
+   <div class="p-1 bg-white flex gap-3 shadow rounded-xl relative mb-4">
+            <div class="img">
+              <img
+                src="${element.cardImg}"
+                alt=""
+                class="w-[50px] rounded-xl h-[50px] object-cover"
+              />
+            </div>
+            <div class="flex-1">
+              <h1 class="text-xs font-bold food-title">
+                ${element.cardTitle}
+              </h1>
+
+              <div class="">
+                <h2 class="text-yellow-600 font-semibold">
+                  $ <span class="food-price">${element.cardPriceUpdated}</span> BDT
+                </h2>
+              </div>
+            </div>
+            <div onclick="removeBtn(this)"
+              class="w-6 h-6 flex justify-center items-center bg-red-600 rounded-full absolute -top-1 -right-1 text-white"
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </div>
+          </div>
+  `;
+    cartContainer.append(cart);
+  });
+};
+const removeBtn = (btn) => {
+  const item = btn.parentNode;
+  const foodTitle = item.querySelector(".food-title").innerText;
+  const foodPrice = Number(item.querySelector(".food-price").innerText);
+  cart = cart.filter((cartItem) => cartItem.cardTitle !== foodTitle);
+  total = 0;
+  cart.forEach((item) => (total += item.cardPriceUpdated));
+
+  displayCart(cart);
+  displayTotal(total);
+};
