@@ -42,6 +42,7 @@ const displayFood = (foods) => {
             <div class="img flex-1">
               <img
                 src="${element.foodImg}"
+                onclick="handleModal(${element.id})"
                 alt=""
                 class="w-[160px] rounded-xl h-[160px] object-cover"
               />
@@ -66,6 +67,7 @@ const displayFood = (foods) => {
             </div>
           </div>
     `;
+
     foodContainer.append(foodCard);
   });
 };
@@ -79,6 +81,68 @@ const loadRandomFood = () => {
 };
 const displayRandom = (randomFoods) => {
   displayFood(randomFoods);
+};
+
+const handleModal = (modal) => {
+  const url = ` https://taxi-kitchen-api.vercel.app/api/v1/foods/${modal}`;
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => showModal(data.details));
+};
+const showModal = (modal) => {
+  const modalContainer = document.getElementById("modalContainer");
+  modalContainer.innerHTML = "";
+  const modals = document.createElement("div");
+  modals.innerHTML = `
+   
+        <div class="modal-box h-[700px] w-[700px] space-y-4">
+          <div>
+            <div class="title text-2xl my-2 font-bold">
+              <h1>${modal.title}</h1>
+            </div>
+            <div class="image flex justify-center items-center">
+              <img
+                src="${modal.foodImg}"
+                class="w-[300px] rounded-xl"
+                alt=""
+              />
+            </div>
+            <div class="flex justify-between items-center m-4">
+              <div class="category text-2xl">
+                <h1>
+                  <span class="bg-[#FEBF00] p-4 rounded-xl"> ${modal.category} </span>
+                </h1>
+              </div>
+              <div>
+                <p class="text-2xl font-bold bg-[#FEBF00] p-2 rounded-xl">
+                  <span>${modal.price}</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <div>
+                <h2 class="text-2xl font-bold">Area:${modal.area}</h2>
+              </div>
+              <div>
+                <a href="${modal.video}" class="bg-[#FEBF00] p-4 rounded-xl text-2xl">
+                  Show Video 
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="modal-action">
+            <form method="dialog">
+              
+              <button class="btn">Close</button>
+            </form>
+          </div>
+        </div>
+   
+  
+  `;
+  modalContainer.append(modals);
+  modalContainer.showModal();
 };
 
 loadCategory();
