@@ -8,3 +8,7 @@
   background-position: center;
   background-attachment: fixed;
 }
+.active {
+  background-color: red;
+  color: white;
+}

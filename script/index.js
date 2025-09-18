@@ -12,7 +12,7 @@ const displayCategories = (card) => {
   card.forEach((element) => {
     const categoryCard = document.createElement("div");
     categoryCard.innerHTML = `
-  <button onclick="loadFood(${element.id})" class="btn btn-block flex justify-center md:justify-start items-center py-4 shadow-lg btn-category">
+  <button id="category-btn${element.id}" onclick="loadFood(${element.id})" class="btn btn-block flex justify-center md:justify-start items-center py-4 shadow-lg btn-category">
             <img
               src="${element.categoryImg}"
               alt=""
@@ -26,7 +26,18 @@ const displayCategories = (card) => {
 
 // category by food
 const loadFood = (id) => {
+  document.getElementById("food-container").classList.add("hidden");
+  document.getElementById("loading-spinner").classList.remove("hidden");
+
   const url = `https://taxi-kitchen-api.vercel.app/api/v1/categories/${id}`;
+  const categoryBtns = document.querySelectorAll(".btn-category");
+  categoryBtns.forEach((element) => {
+    element.classList.remove("active");
+  });
+
+  const currentBtn = document.getElementById(`category-btn${id}`);
+  currentBtn.classList.add("active");
+
   fetch(url)
     .then((res) => res.json())
     .then((data) => displayFood(data.foods));
@@ -70,6 +81,8 @@ const displayFood = (foods) => {
 
     foodContainer.append(foodCard);
   });
+  document.getElementById("food-container").classList.remove("hidden");
+  document.getElementById("loading-spinner").classList.add("hidden");
 };
 
 // random food
